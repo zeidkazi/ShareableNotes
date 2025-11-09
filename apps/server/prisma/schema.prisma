@@ -1,0 +1,24 @@
+// Generator - tells Prisma how to generate TypeScript client
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+// Datasource - tells Prisma which database to use
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Models - define your database tables
+model Note {
+  id        String   @id @default(uuid())
+  viewId    String   @unique
+  editId    String   @unique
+  content   String   @default("")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([viewId])
+  @@index([editId])
+}
