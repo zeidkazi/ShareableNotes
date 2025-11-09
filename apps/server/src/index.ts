@@ -3,7 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { fileURLToPath } from "url";
 import path from "path";
-import notesRoutes from "./routes/notes.routes.js";
+import notesRoutes from "./routes/notes.routes";
 
 // Load .env from root directory
 const __filename = fileURLToPath(import.meta.url);

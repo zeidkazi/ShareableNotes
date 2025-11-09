@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { notesService } from "../services/notes.service";
-import { error } from "node:console";
 
 export const notesController = {
   //POST /api/notes - create a new note

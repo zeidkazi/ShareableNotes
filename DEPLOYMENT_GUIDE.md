@@ -11,6 +11,7 @@ Why? The frontend needs the backend URL to work properly.
 ## 📦 Step 1: Deploy Backend (Render)
 
 ### Prerequisites
+
 - GitHub repository with your code pushed
 - Supabase database URL ready
 
@@ -29,24 +30,30 @@ Why? The frontend needs the backend URL to work properly.
    - **Name**: `notes-app-backend` (or any name you like)
    - **Root Directory**: `apps/server`
    - **Environment**: `Node`
-   - **Build Command**: 
-     ```bash
-     npm install && npx prisma generate && npx prisma migrate deploy
-     ```
-   - **Start Command**: 
+     - **Build Command**:
+       ```bash
+       npm install && npx prisma migrate deploy && npm run build
+       ```
+
+     **Note**:
+     - `npm run build` generates Prisma client
+     - `npm start` uses `tsx` to run TypeScript directly (no compilation needed)
+     - This avoids needing `.js` extensions in your TypeScript code
+
+   - **Start Command**:
      ```bash
      npm start
      ```
 
 4. **Add Environment Variables**
    Click "Environment" tab and add:
-   
+
    ```
    DATABASE_URL=postgresql://... (your Supabase connection string)
    CORS_ORIGIN=https://your-frontend-domain.vercel.app
    ```
-   
-   **Note**: 
+
+   **Note**:
    - `PORT` is automatically set by Render (don't add it)
    - For `CORS_ORIGIN`, you'll update this after deploying frontend
    - For now, you can leave it empty or set to `*` temporarily
@@ -57,7 +64,7 @@ Why? The frontend needs the backend URL to work properly.
    - Once deployed, you'll get a URL like: `https://notes-app-backend.onrender.com`
 
 6. **Test Backend**
-   - Test with: `curl https://your-backend-url.onrender.com/api/notes` 
+   - Test with: `curl https://your-backend-url.onrender.com/api/notes`
    - Should return an error (expected), but confirms the server is running
    - Or try: `curl -X POST https://your-backend-url.onrender.com/api/notes -H "Content-Type: application/json" -d '{"content":"test"}'`
 
@@ -70,6 +77,7 @@ Why? The frontend needs the backend URL to work properly.
 ## 🎨 Step 2: Deploy Frontend (Vercel)
 
 ### Prerequisites
+
 - Backend deployed and URL ready
 - GitHub repository
 
@@ -93,11 +101,11 @@ Why? The frontend needs the backend URL to work properly.
 
 4. **Add Environment Variables**
    Click "Environment Variables" and add:
-   
+
    ```
    VITE_API_URL=https://your-backend-url.onrender.com
    ```
-   
+
    **Important**: Replace `your-backend-url.onrender.com` with your actual Render backend URL
 
 5. **Deploy**
@@ -145,16 +153,19 @@ Now that you have your frontend URL, update the backend CORS:
 ### Backend Issues
 
 **Problem**: Build fails with "Prisma client not found"
+
 - **Solution**: Make sure build command includes `npx prisma generate`
 
 **Problem**: Database connection error
-- **Solution**: 
+
+- **Solution**:
   - Check `DATABASE_URL` is correct
   - Use Supabase Transaction Pooler URL (port 6543)
   - Make sure database is accessible from Render's IP
 
 **Problem**: CORS errors
-- **Solution**: 
+
+- **Solution**:
   - Check `CORS_ORIGIN` matches your frontend URL exactly
   - Include `https://` in the URL
   - Wait for redeploy after changing environment variables
@@ -162,13 +173,15 @@ Now that you have your frontend URL, update the backend CORS:
 ### Frontend Issues
 
 **Problem**: API calls failing
-- **Solution**: 
+
+- **Solution**:
   - Check `VITE_API_URL` is set correctly
   - Make sure it includes `https://`
   - No trailing slash in the URL
 
 **Problem**: Build fails
-- **Solution**: 
+
+- **Solution**:
   - Check Root Directory is `apps/web`
   - Make sure all dependencies are in `package.json`
 
@@ -177,12 +190,14 @@ Now that you have your frontend URL, update the backend CORS:
 ## 📝 Environment Variables Summary
 
 ### Backend (Render)
+
 ```
 DATABASE_URL=postgresql://user:password@host:port/database
 CORS_ORIGIN=https://your-frontend.vercel.app
 ```
 
 ### Frontend (Vercel)
+
 ```
 VITE_API_URL=https://your-backend.onrender.com
 ```
@@ -192,10 +207,12 @@ VITE_API_URL=https://your-backend.onrender.com
 ## 🚀 Quick Reference
 
 ### Render Backend URLs
+
 - Dashboard: `https://dashboard.render.com`
 - Your service: Check your Render dashboard
 
 ### Vercel Frontend URLs
+
 - Dashboard: `https://vercel.com/dashboard`
 - Your project: Check your Vercel dashboard
 
@@ -212,4 +229,3 @@ VITE_API_URL=https://your-backend.onrender.com
 ---
 
 **You're all set! 🎉**
-
