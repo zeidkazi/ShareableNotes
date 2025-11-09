@@ -32,7 +32,7 @@ export default function CreateNote() {
   };
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
+    <div className="min-h-dvh bg-white flex flex-col">
       <div className="border-b border-neutral-200 bg-white p-3 sm:p-4">
         <div className="max-w-4xl mx-auto flex items-center gap-2 sm:gap-4">
           <button
