@@ -33,8 +33,8 @@ export default function CreateNote() {
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
-      <div className="border-b border-neutral-200 bg-white p-4">
-        <div className="max-w-4xl mx-auto flex items-center gap-4">
+      <div className="border-b border-neutral-200 bg-white p-3 sm:p-4">
+        <div className="max-w-4xl mx-auto flex items-center gap-2 sm:gap-4">
           <button
             onClick={() => navigate("/")}
             className="p-2 hover:bg-neutral-100 rounded-lg transition-colors"
@@ -45,29 +45,29 @@ export default function CreateNote() {
         </div>
       </div>
 
-      <div className="flex-1 p-4">
+      <div className="flex-1 p-3 sm:p-4">
         <div className="max-w-4xl mx-auto">
           <textarea
             value={content}
             onChange={(e) => setContent(e.target.value)}
             placeholder="Start typing your note..."
-            className="w-full h-full min-h-[500px] p-6 bg-white border border-neutral-200 rounded-xl resize-none focus:outline-none focus:border-neutral-400 text-neutral-900 placeholder:text-neutral-400 transition-colors"
+            className="w-full h-full min-h-[300px] sm:min-h-[400px] md:min-h-[500px] p-4 sm:p-6 bg-white border border-neutral-200 rounded-xl resize-none focus:outline-none focus:border-neutral-400 text-neutral-900 placeholder:text-neutral-400 transition-colors text-sm sm:text-base"
           />
         </div>
       </div>
 
-      <div className="border-t border-neutral-200 bg-white p-4">
-        <div className="max-w-4xl mx-auto flex justify-between">
+      <div className="border-t border-neutral-200 bg-white p-3 sm:p-4">
+        <div className="max-w-4xl mx-auto flex flex-col sm:flex-row justify-between gap-3 sm:gap-0">
           <button
             onClick={() => navigate("/")}
-            className="px-6 py-2.5 border border-neutral-200 rounded-lg hover:bg-neutral-50 hover:border-neutral-300 transition-colors text-neutral-700"
+            className="w-full sm:w-auto px-4 sm:px-6 py-2.5 border border-neutral-200 rounded-lg hover:bg-neutral-50 hover:border-neutral-300 transition-colors text-neutral-700 text-sm sm:text-base"
           >
             Cancel
           </button>
           <button
             onClick={handleSave}
             disabled={!content.trim() || mutations.createNoteMutation.isPending}
-            className="px-6 py-2.5 bg-black text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 font-medium hover:bg-neutral-800 transition-colors"
+            className="w-full sm:w-auto px-4 sm:px-6 py-2.5 bg-black text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 font-medium hover:bg-neutral-800 transition-colors text-sm sm:text-base"
           >
             {mutations.createNoteMutation.isPending && (
               <Loader2 className="w-4 h-4 animate-spin" />

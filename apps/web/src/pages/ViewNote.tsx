@@ -102,70 +102,74 @@ export default function ViewNote() {
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
-      <div className="border-b border-neutral-200 bg-white p-4">
-        <div className="max-w-4xl mx-auto flex items-center gap-4">
-          <button
-            onClick={() => navigate("/")}
-            className="p-2 hover:bg-neutral-100 rounded-lg transition-colors"
-          >
-            <ArrowLeft className="w-5 h-5 text-neutral-600" />
-          </button>
-
-          <div className="flex-1 flex items-center gap-2">
-            <input
-              type="text"
-              value={shareUrl}
-              readOnly
-              className="flex-1 px-3 py-2 bg-neutral-50 border border-neutral-200 rounded-lg text-sm text-neutral-900 focus:outline-none focus:border-neutral-400 transition-colors"
-            />
+      <div className="border-b border-neutral-200 bg-white p-3 sm:p-4">
+        <div className="max-w-4xl mx-auto space-y-3 sm:space-y-0">
+          <div className="flex items-center gap-2 sm:gap-4">
             <button
-              onClick={copyUrl}
-              className="px-4 py-2 bg-neutral-50 border border-neutral-200 rounded-lg text-sm hover:bg-neutral-100 hover:border-neutral-300 flex items-center gap-2 text-neutral-700 transition-colors"
+              onClick={() => navigate("/")}
+              className="p-2 hover:bg-neutral-100 rounded-lg transition-colors flex-shrink-0"
             >
-              <Copy className="w-4 h-4" />
-              Copy
+              <ArrowLeft className="w-5 h-5 text-neutral-600" />
             </button>
+
+            <div className="flex-1 flex items-center gap-2 min-w-0">
+              <input
+                type="text"
+                value={shareUrl}
+                readOnly
+                className="flex-1 min-w-0 px-2 sm:px-3 py-2 bg-neutral-50 border border-neutral-200 rounded-lg text-xs sm:text-sm text-neutral-900 focus:outline-none focus:border-neutral-400 transition-colors truncate"
+              />
+              <button
+                onClick={copyUrl}
+                className="px-3 sm:px-4 py-2 bg-neutral-50 border border-neutral-200 rounded-lg text-xs sm:text-sm hover:bg-neutral-100 hover:border-neutral-300 flex items-center gap-1 sm:gap-2 text-neutral-700 transition-colors flex-shrink-0"
+              >
+                <Copy className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="hidden sm:inline">Copy</span>
+              </button>
+            </div>
+
+            {canEdit && !isEditing && (
+              <button
+                onClick={() => setIsEditing(true)}
+                className="px-3 sm:px-4 py-2 bg-black text-white rounded-lg flex items-center gap-1 sm:gap-2 font-medium hover:bg-neutral-800 transition-colors text-xs sm:text-sm flex-shrink-0"
+              >
+                <Edit className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="hidden sm:inline">Edit</span>
+              </button>
+            )}
+
+            {!canEdit && !isEditing && (
+              <button
+                onClick={handleCreateCopy}
+                disabled={createMutations.createNoteMutation.isPending}
+                className="px-3 sm:px-4 py-2 bg-black text-white rounded-lg flex items-center gap-1 sm:gap-2 disabled:opacity-50 disabled:cursor-not-allowed font-medium hover:bg-neutral-800 transition-colors text-xs sm:text-sm flex-shrink-0"
+              >
+                {createMutations.createNoteMutation.isPending ? (
+                  <Loader2 className="w-3 h-3 sm:w-4 sm:h-4 animate-spin" />
+                ) : (
+                  <CopyPlus className="w-3 h-3 sm:w-4 sm:h-4" />
+                )}
+                <span className="hidden sm:inline">
+                  {createMutations.createNoteMutation.isPending
+                    ? "Creating..."
+                    : "Create Copy"}
+                </span>
+              </button>
+            )}
           </div>
-
-          {canEdit && !isEditing && (
-            <button
-              onClick={() => setIsEditing(true)}
-              className="px-4 py-2 bg-black text-white rounded-lg flex items-center gap-2 font-medium hover:bg-neutral-800 transition-colors"
-            >
-              <Edit className="w-4 h-4" />
-              Edit
-            </button>
-          )}
-
-          {!canEdit && !isEditing && (
-            <button
-              onClick={handleCreateCopy}
-              disabled={createMutations.createNoteMutation.isPending}
-              className="px-4 py-2 bg-black text-white rounded-lg flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed font-medium hover:bg-neutral-800 transition-colors"
-            >
-              {createMutations.createNoteMutation.isPending ? (
-                <Loader2 className="w-4 h-4 animate-spin" />
-              ) : (
-                <CopyPlus className="w-4 h-4" />
-              )}
-              {createMutations.createNoteMutation.isPending
-                ? "Creating..."
-                : "Create Copy"}
-            </button>
-          )}
         </div>
       </div>
 
-      <div className="flex-1 p-4">
-        <div className="max-w-4xl mx-auto bg-white rounded-xl border border-neutral-200 p-6 min-h-[500px] shadow-sm">
+      <div className="flex-1 p-3 sm:p-4">
+        <div className="max-w-4xl mx-auto bg-white rounded-xl border border-neutral-200 p-4 sm:p-6 min-h-[300px] sm:min-h-[400px] md:min-h-[500px] shadow-sm">
           {isEditing ? (
             <textarea
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              className="w-full h-full min-h-[500px] p-4 bg-transparent border border-neutral-200 rounded-lg resize-none focus:outline-none focus:border-neutral-400 text-neutral-900 transition-colors"
+              className="w-full h-full min-h-[300px] sm:min-h-[400px] md:min-h-[500px] p-3 sm:p-4 bg-transparent border border-neutral-200 rounded-lg resize-none focus:outline-none focus:border-neutral-400 text-neutral-900 transition-colors text-sm sm:text-base"
             />
           ) : (
-            <div className="whitespace-pre-wrap min-h-[500px] text-neutral-800 leading-relaxed">
+            <div className="whitespace-pre-wrap min-h-[300px] sm:min-h-[400px] md:min-h-[500px] text-neutral-800 leading-relaxed text-sm sm:text-base">
               {note.content || (
                 <span className="text-neutral-400">No content</span>
               )}
@@ -174,9 +178,9 @@ export default function ViewNote() {
         </div>
       </div>
 
-      <div className="border-t border-neutral-200 bg-white p-4">
-        <div className="max-w-4xl mx-auto flex justify-between items-center">
-          <div className="text-sm text-neutral-600">
+      <div className="border-t border-neutral-200 bg-white p-3 sm:p-4">
+        <div className="max-w-4xl mx-auto flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-0">
+          <div className="text-xs sm:text-sm text-neutral-600">
             <p>Created {new Date(note.createdAt).toLocaleString()}</p>
             {note.updatedAt !== note.createdAt && (
               <p>Updated {new Date(note.updatedAt).toLocaleString()}</p>
@@ -184,20 +188,20 @@ export default function ViewNote() {
           </div>
 
           {isEditing && (
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
               <button
                 onClick={() => {
                   setContent(note.content);
                   setIsEditing(false);
                 }}
-                className="px-4 py-2 border border-neutral-200 rounded-lg hover:bg-neutral-50 hover:border-neutral-300 text-neutral-700 transition-colors"
+                className="w-full sm:w-auto px-4 py-2 border border-neutral-200 rounded-lg hover:bg-neutral-50 hover:border-neutral-300 text-neutral-700 transition-colors text-sm sm:text-base"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSave}
                 disabled={updateMutations.updateNoteMutation.isPending}
-                className="px-4 py-2 bg-black text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 font-medium hover:bg-neutral-800 transition-colors"
+                className="w-full sm:w-auto px-4 py-2 bg-black text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 font-medium hover:bg-neutral-800 transition-colors text-sm sm:text-base"
               >
                 {updateMutations.updateNoteMutation.isPending && (
                   <Loader2 className="w-4 h-4 animate-spin" />

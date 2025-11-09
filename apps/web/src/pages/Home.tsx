@@ -14,10 +14,10 @@ export default function Home() {
             </div>
           </div>
 
-          <h1 className="text-6xl font-bold mb-4 tracking-tight text-neutral-900">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 tracking-tight text-neutral-900">
             Notes App
           </h1>
-          <p className="text-neutral-600 text-lg mb-10">
+          <p className="text-neutral-600 text-base sm:text-lg mb-10 px-4">
             Create and share notes instantly
           </p>
 
