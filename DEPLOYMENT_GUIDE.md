@@ -185,6 +185,14 @@ Now that you have your frontend URL, update the backend CORS:
   - Check Root Directory is `apps/web`
   - Make sure all dependencies are in `package.json`
 
+**Problem**: 404 error when refreshing on routes like `/note/:viewId`
+
+- **Solution**:
+  - This is a SPA routing issue
+  - Create `vercel.json` in `apps/web` with rewrite rules (already done)
+  - Vercel needs to redirect all routes to `index.html` so React Router can handle them
+  - After adding `vercel.json`, redeploy on Vercel
+
 ---
 
 ## 📝 Environment Variables Summary
